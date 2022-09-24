@@ -5,5 +5,5 @@ create table tasks
     name        text not null,
     description text,
     due_date    date,
-    created_at  date                    default current_date
+    created_at  timestamp               default now()
 );
