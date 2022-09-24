@@ -28,3 +28,8 @@ async def server_search(name: str, page: int = 1):
 @app.put('/edit_task', status_code=200)
 async def server_edit_task(id: str, name: str = None, description: str = None, due_date: str = None):
     db.edit_task(id, name, description, due_date)
+
+
+@app.delete('/delete_task', status_code=200)
+async def server_delete_task(id: str):
+    db.delete_task(id)

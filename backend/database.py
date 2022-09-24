@@ -74,3 +74,12 @@ def edit_task(id, name=None, description=None, due_date=None):
                     update tasks set due_date = %s where id = %s
                     """, (due_date, id))
             conn.commit()
+
+
+def delete_task(id):
+    with psycopg.connect("dbname=tasks user=postgres") as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                delete from tasks where id = %s
+                """, (id,))
+            conn.commit()
