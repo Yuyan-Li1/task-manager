@@ -35,6 +35,7 @@ def get_tasks(sort_by='created_at', page=1):
                     'created_at': row[4]
                 }
                 tasks.append(task)
+            conn.commit()
             return tasks
 
 
@@ -55,6 +56,7 @@ def search(name, page=1):
                     'created_at': row[4]
                 }
                 tasks.append(task)
+            conn.commit()
             return tasks
 
 
@@ -73,6 +75,19 @@ def edit_task(id, name=None, description=None, due_date=None):
                 cur.execute("""
                     update tasks set due_date = %s where id = %s
                     """, (due_date, id))
+            cur.execute('''
+                select * from tasks where id = %s''', (id,))
+            edited = cur.fetchone()
+
+            task = {
+                'id': edited[0],
+                'name': edited[1],
+                'description': edited[2],
+                'due_date': edited[3],
+                'created_at': edited[4]
+            }
+            print(task)
+            return task
             conn.commit()
 
 
