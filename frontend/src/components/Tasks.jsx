@@ -1,35 +1,50 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
+import Task from "./Task";
+import EditTask from "./EditTask";
 
 
-export default function Tasks() {
-    const [tasks, setTasks] = useState([]);
-    useEffect(() => {
-        fetchTasks();
-    }, []);
-    const fetchTasks = () => {
-        return axios.get("http://localhost:8000/get_tasks/").then((response) => {
-            const allTasks = response.data;
-            setTasks(allTasks);
-            console.log(response.data);
-        })
-            .catch((error) => console.error(`Error: ${error}`));
-    };
+export default function Tasks({tasks, onUpdateTask}) {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editTask, setEditTask] = useState({
+        id: "",
+        name: "",
+        description: "",
+        due_date: "",
+        created_at: ""
+    });
 
-    function taskStatus(due) {
-        const today = new Date();
-        const dueDate = new Date(due);
-        if (dueDate > today) {
-            return "Overdue";
-        } else if (dueDate < today && dueDate < today.setDate(today.getDate() - 7)) {
-            return "Due soon";
-        } else {
-            return "Not urgent";
+    function handleTaskUpdate(updatedTask) {
+        onUpdateTask(updatedTask);
+        setIsEditing(false);
+    }
+
+    function handleChanges(e) {
+        setEditTask({
+            ...editTask,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    function changeEditState(task) {
+        if (task.id === editTask.id) {
+            setIsEditing(isEditing => !isEditing);
+        } else if (isEditing === false) {
+            setIsEditing(isEditing => !isEditing);
         }
     }
 
+    function captureEdit(clickedTask) {
+        let filtered = tasks.filter(task => task.id === clickedTask.id);
+        setEditTask(filtered[0]);
+    }
 
     return (<div>
+        {isEditing ? (
+            <EditTask
+                editTask={editTask}
+                handleTaskUpdate={handleTaskUpdate}
+                handleChanges={handleChanges}
+            />) : null}
         <h1>Tasks</h1>
         <table>
             <thead>
@@ -39,22 +54,17 @@ export default function Tasks() {
                 <th>Due Date</th>
                 <th>Create date</th>
                 <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
-            {
-                tasks.map((value, key) => { // to be changed
-                    return (
-                        <tr key={key}>
-                            <td>{value.name}</td>
-                            <td>{value.description}</td>
-                            <td>{value.due_date}</td>
-                            <td>{value.created_at.slice(0, 10)}</td>
-                            <td>{taskStatus(value.due_date)}</td>
-                        </tr>
-                    )
-                })
-            }
+            {tasks.map(task => <Task
+                key={task.id}
+                task={task}
+                captureEdit={captureEdit}
+                changeEditState={changeEditState}
+            />)}
             </tbody>
         </table>
     </div>)
