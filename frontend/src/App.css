@@ -1,38 +1,94 @@
+.Header {
+    padding: 20px;
+    background-color: #dbb46f;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 .App {
-  text-align: center;
+    text-align: center;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    background: #e2e3e8;
+    color: #232426;
+    font-size: 18px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.Tasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.TaskTable {
+    border-collapse: collapse;
+    width: 90%;
+    table-layout: fixed;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Tasks > table > thead > tr > th {
+    padding-bottom: 15px;
+    color: #667f60;
 }
 
-.App-link {
-  color: #61dafb;
+.Task > td {
+    padding: 10px;
+    word-wrap: break-word;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Task {
+    border: solid #667f60;
+    border-width: 1px 0;
+}
+
+.Search {
+    padding: 20px;
+}
+
+.Search > input {
+    height: 35px;
+    width: 700px;
+    font-size: 24px;
+}
+
+.Sort {
+    height: 30px;
+    font-size: 20px;
+}
+
+.Button {
+    background: #d7b09e;
+    border: 1px solid #d7b09e;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #16260D;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 35px;
+    outline: 0;
+    padding: 10px 12px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+}
+
+.NewTaskForm {
+
+}
+
+.NewTaskForm > input {
+    height: 20px;
+    font-size: 24px;
 }

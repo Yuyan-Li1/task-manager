@@ -65,15 +65,14 @@ export default function Tasks({tasks, tasksUpdated}) {
         setEditTask(filtered[0]);
     }
 
-    return (<div>
+    return (<div className="Tasks">
         {isEditing ? (
             <EditTask
                 editTask={editTask}
                 handleTaskUpdate={handleTaskUpdate}
                 handleChanges={handleChanges}
             />) : null}
-        <h1>Tasks</h1>
-        <table>
+        <table className="TaskTable">
             <thead>
             <tr>
                 <th>Name</th>
@@ -95,7 +94,7 @@ export default function Tasks({tasks, tasksUpdated}) {
             />)}
             <tr>
                 <td>
-                    <form id="newTaskForm" onSubmit={e => handleSubmit(e)}></form>
+                    <form className="NewTaskForm" id="newTaskForm" onSubmit={e => handleSubmit(e)}></form>
                     <input
                         form="newTaskForm"
                         type="text" name="name"
@@ -123,7 +122,7 @@ export default function Tasks({tasks, tasksUpdated}) {
                         onChange={handleNewTaskChanges}
                     /></td>
                 <td>
-                    <input form="newTaskForm" type="submit"/>
+                    <input className="Button" form="newTaskForm" type="submit"/>
                 </td>
             </tr>
             </tbody>

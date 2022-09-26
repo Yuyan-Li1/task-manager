@@ -24,7 +24,7 @@ function EditTask({editTask, handleTaskUpdate, handleChanges}) {
                 <input type="text" name="name" value={name} onChange={handleChanges}/>
                 <input type="text" name="description" value={description} onChange={handleChanges}/>
                 <input type="date" name="due_date" value={due_date} onChange={handleChanges}/>
-                <button type="submit">Update</button>
+                <button className="Button" type="submit">Update</button>
             </form>
         </div>
     )

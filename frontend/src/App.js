@@ -49,7 +49,8 @@ function App() {
             } else {
                 return (
                     <div>
-                        <button onClick={handlePageUp}>Next</button>
+                        Page {page}
+                        <button className="Button" onClick={handlePageUp}>Next</button>
                     </div>
                 )
             }
@@ -57,14 +58,16 @@ function App() {
             if (tasks.length < 20) {
                 return (
                     <div>
-                        <button onClick={handlePageDown}>Prev</button>
+                        <button className="Button" onClick={handlePageDown}>Prev</button>
+                        Page {page}
                     </div>
                 )
             }
             return (
                 <div>
-                    <button onClick={handlePageDown}>Prev</button>
-                    <button onClick={handlePageUp}>Next</button>
+                    <button className="Button" onClick={handlePageDown}>Prev</button>
+                    Page {page}
+                    <button className="Button" onClick={handlePageUp}>Next</button>
                 </div>
             )
         }
@@ -79,8 +82,8 @@ function App() {
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
             />
-            <label htmlFor="cars">Sort by:</label>
-            <select name="sort" id="sort" onChange={(e) => handleSortChange(e)}>
+            <label htmlFor="cars">Sort by: </label>
+            <select className="Sort" name="sort" id="sort" onChange={(e) => handleSortChange(e)}>
                 <option value="created_at">Creation date</option>
                 <option value="due_date">Due date</option>
             </select>

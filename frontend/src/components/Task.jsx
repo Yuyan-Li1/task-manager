@@ -37,21 +37,21 @@ export default function Task({
     }
 
     return (
-        <tr key={id}>
+        <tr key={id} className="Task">
             <td>{name}</td>
             <td>{description}</td>
             <td>{due_date}</td>
             <td>{created_at.slice(0, 10)}</td>
             <td>{taskStatus(due_date)}</td>
             <td>
-                <button onClick={() => {
+                <button className="Button" onClick={() => {
                     captureEdit(task);
                     changeEditState(task);
                 }}>Edit
                 </button>
             </td>
             <td>
-                <button onClick={() => handleDelete()}
+                <button className="Button" onClick={() => handleDelete()}
                 >Delete
                 </button>
             </td>

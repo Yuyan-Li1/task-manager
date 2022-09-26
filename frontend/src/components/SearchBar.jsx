@@ -14,7 +14,7 @@ function SearchBar({setIsSearching, searchTerm, setSearchTerm}) {
     }
 
     return (
-        <form>
+        <form className="Search">
             <input
                 type="text"
                 placeholder="Search..."
