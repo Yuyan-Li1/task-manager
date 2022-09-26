@@ -31,8 +31,8 @@ async def server_get_tasks(sort_by: str = 'created_at', page: int = 1):
 
 
 @app.get('/search/', status_code=200)
-async def server_search(name: str, page: int = 1):
-    return db.search(name, page)
+async def server_search(name: str, sort_by: str = 'created_at', page: int = 1):
+    return db.search(name, sort_by, page)
 
 
 @app.put('/edit_task/', status_code=200)

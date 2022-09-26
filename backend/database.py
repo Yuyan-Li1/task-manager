@@ -14,16 +14,12 @@ def add_task(name, description, due_date):
 def get_tasks(sort_by='created_at', page=1):
     if sort_by not in ['created_at', 'due_date']:
         raise ValueError(f"Invalid sort_by value: {sort_by}")
-    elif sort_by == 'created_at':
-        sort_by = 'created_at desc'
-    elif sort_by == 'due_date':
-        sort_by = 'due_date desc'
 
     with psycopg.connect("dbname=tasks user=postgres") as conn:
         with conn.cursor() as cur:
             cur.execute("""
                 select * from tasks order by %s limit 20 offset %s
-                """, (sort_by, 20 * (page - 1)))
+                """, (sort_by + ' desc', 20 * (page - 1)))
             data = cur.fetchall()
             tasks = []
             for row in data:
@@ -36,15 +32,16 @@ def get_tasks(sort_by='created_at', page=1):
                 }
                 tasks.append(task)
             conn.commit()
-            return tasks
+            return sorted(tasks, key=lambda x: x[sort_by])
 
 
-def search(name, page=1):
+def search(name, sort_by='created_at', page=1):
+    print(sort_by)
     with psycopg.connect("dbname=tasks user=postgres") as conn:
         with conn.cursor() as cur:
             cur.execute("""
-                select * from tasks where name like %s order by created_at desc limit 20 offset %s 
-                """, (f"%{name}%", 20 * (page - 1)))
+                select * from tasks where name like %s order by %s desc limit 20 offset %s 
+                """, (f"%{name}%", sort_by, 20 * (page - 1)))
             data = cur.fetchall()
             tasks = []
             for row in data:
@@ -57,7 +54,7 @@ def search(name, page=1):
                 }
                 tasks.append(task)
             conn.commit()
-            return tasks
+            return sorted(tasks, key=lambda x: x[sort_by])
 
 
 def edit_task(id, name=None, description=None, due_date=None):
