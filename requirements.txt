@@ -4,6 +4,7 @@ fastapi==0.85.0
 h11==0.13.0
 httptools==0.5.0
 idna==3.4
+psycopg==3.1.2
 pydantic==1.10.2
 python-dotenv==0.21.0
 PyYAML==6.0
@@ -14,5 +15,3 @@ uvicorn==0.18.3
 uvloop==0.17.0
 watchfiles==0.17.0
 websockets==10.3
-
-psycopg~=3.1.2
