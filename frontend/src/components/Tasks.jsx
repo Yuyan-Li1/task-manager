@@ -3,7 +3,7 @@ import Task from "./Task";
 import EditTask from "./EditTask";
 
 
-export default function Tasks({tasks, onUpdateTask}) {
+export default function Tasks({tasks, tasksUpdated}) {
     const [isEditing, setIsEditing] = useState(false);
     const [editTask, setEditTask] = useState({
         id: "",
@@ -13,8 +13,35 @@ export default function Tasks({tasks, onUpdateTask}) {
         created_at: ""
     });
 
-    function handleTaskUpdate(updatedTask) {
-        onUpdateTask(updatedTask);
+    const [newTask, setNewTask] = useState({
+        name: "",
+        description: "",
+        due_date: "",
+    });
+
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        let queryString = `http://localhost:8000/add_task/?name=${newTask.name}&description=${newTask.description}&due_date=${newTask.due_date}`;
+        fetch(queryString, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(() => tasksUpdated())
+
+    }
+
+    function handleNewTaskChanges(e) {
+        setNewTask({
+            ...newTask,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    function handleTaskUpdate() {
+        tasksUpdated();
         setIsEditing(false);
     }
 
@@ -64,7 +91,41 @@ export default function Tasks({tasks, onUpdateTask}) {
                 task={task}
                 captureEdit={captureEdit}
                 changeEditState={changeEditState}
+                tasksUpdated={tasksUpdated}
             />)}
+            <tr>
+                <td>
+                    <form id="newTaskForm" onSubmit={e => handleSubmit(e)}></form>
+                    <input
+                        form="newTaskForm"
+                        type="text" name="name"
+                        placeholder="Name of new task"
+                        value={newTask.name}
+                        onChange={handleNewTaskChanges}
+                    />
+                </td>
+                <td>
+                    <input
+                        form="newTaskForm"
+                        type="text" name="description"
+                        placeholder="Description of new task"
+                        value={newTask.description}
+                        onChange={handleNewTaskChanges}
+                    />
+                </td>
+                <td>
+                    <input
+                        form="newTaskForm"
+                        type="date"
+                        name="due_date"
+                        placeholder={new Date().toJSON()}
+                        value={newTask.due_date}
+                        onChange={handleNewTaskChanges}
+                    /></td>
+                <td>
+                    <input form="newTaskForm" type="submit"/>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>)
